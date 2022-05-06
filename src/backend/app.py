@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask import request
 import  random
 
-app = Flask(name)
+app = Flask(__name__)
 
 database = {
             '000000001': {
@@ -38,7 +38,7 @@ class RechargeForm(FlaskForm):
     card_no = IntegerField('card_no', validators=[DataRequired(), Length(min=16, max=16)])
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=30)])
     recharge_amount = IntegerField()
-    submit = SubmitField('Register')
+    submit = SubmitField('Submit')
 
 @app.route('/')
 def home():  # put application's code here
@@ -63,8 +63,8 @@ def calculate_distance():
         dropoff_location = form.get('dropoff')
         fair = random.randint(13, 50)
         temp = f'The Total amount to be paid is {fair}'
-        print(temp)
+        database[form.get('card_no')]['balance'] -= fair
         return render_template('fair_price.html', fair=fair)
 
-if name == 'main':
-    app.run()from flask import Flask
+if __name__ == '__main__':
+    app.run()
