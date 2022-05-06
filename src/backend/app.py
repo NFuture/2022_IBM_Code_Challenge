@@ -61,6 +61,7 @@ def calculate_distance():
         form = RechargeForm(request.form)
         pickup_location = form.get('pickup')
         dropoff_location = form.get('dropoff')
+        # Random function because we had no time to setup a system to determine the fair prices for this demonstration.
         fair = random.randint(13, 50)
         temp = f'The Total amount to be paid is {fair}'
         database[form.get('card_no')]['balance'] -= fair
