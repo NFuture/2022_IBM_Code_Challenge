@@ -6,28 +6,28 @@ from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask import request
 import  random
 
-app = Flask(__name__)
+app = Flask(name)
 
 database = {
-            '01': {
+            '000000001': {
                     'Name': 'Noel Thekethala',
                     'blocked': False,
                     'class': 'Student',
                     'balance':  100,
                 },
-            '02': {
+            '000000002': {
                 'Name': 'Richard S',
                 'blocked': False,
                 'class': 'Farmer',
                 'balance': 170,
             },
-            '03': {
+            '00000003': {
                 'Name': 'Shimron Watiti',
                 'blocked': False,
                 'class': 'Disabled',
                 'balance': 140,
             },
-            '04': {
+            '000000004': {
                 'Name': 'Shimron Watiti',
                 'blocked': False,
                 'class': 'SeniorCitizen',
@@ -51,15 +51,20 @@ def recharge():
         form = RechargeForm(request.form)
         amount = form.get('recharge_amount')
         database[form.get('card_no')]['balance'] += amount
-        return f' Recharged with {amount} Successfully'
+        return render_template('recharge_successful.html')
 
 def calculate_distance():
-    form = RechargeForm(request.form)
-    pickup_location = form.get('pickup')
-    dropoff_location = form.get('dropoff')
-    fair = random.randint(13, 50)
-    temp = f'The Total amount to be paid is {fair}'
 
-if __name__ == '__main__':
-    app.run()
+    if request.method == 'GET':
+        pass
+    else:
+        form = RechargeForm(request.form)
+        pickup_location = form.get('pickup')
+        dropoff_location = form.get('dropoff')
+        fair = random.randint(13, 50)
+        temp = f'The Total amount to be paid is {fair}'
+        print(temp)
+        return render_template('fair_price.html', fair=fair)
 
+if name == 'main':
+    app.run()from flask import Flask
